@@ -2,6 +2,108 @@
 import Foundation
 
 class Day6 {
+    var orbits: [(parent: String, child: String)] {
+        rawInput.split(separator: "\n").map {
+            let sides = $0.split(separator: ")")
+            return (parent: String(sides[0]), child: String(sides[1]))
+        }
+    }
+    
+    lazy var bodies: [String: Node] = {
+        var bodies = [String: Node]()
+        for (parent, child) in orbits {
+            let parentNode: Node
+            if bodies.keys.contains(parent) {
+                parentNode = bodies[parent]!
+            } else {
+                parentNode = Node(value: parent)
+                bodies[parent] = parentNode
+            }
+            let childNode: Node
+            if bodies.keys.contains(child) {
+                childNode = bodies[child]!
+            } else {
+                childNode = Node(value: child)
+                bodies[child] = childNode
+            }
+            parentNode.children.append(childNode)
+            childNode.parent = parentNode
+        }
+        return bodies
+    }()
+    
+    class Node {
+        weak var parent: Node?
+        var value: String
+        var children = [Node]()
+        
+        init(value: String) {
+            self.value = value
+        }
+    }
+    
+    // What is the total number of direct and indirect orbits in your map data?
+    func solution1() -> Int {
+        // construct tree
+        var orbitCount = 0
+        
+        for body in bodies.keys {
+            var current: Node? = bodies[body]
+            while current?.parent != nil {
+                orbitCount += 1
+                current = current?.parent
+            }
+        }
+        
+        return orbitCount
+    }
+    
+    /*
+     What is the minimum number of orbital transfers required to move from
+     the object YOU are orbiting to the object SAN is orbiting? (Between the
+     objects they are orbiting - not between YOU and SAN.)
+     */
+    func solution2() -> Int {
+        var frontier = [String]()
+        var cameFrom = [String: String]()
+        var traversed = Set<String>()
+        
+        let startingNode = bodies["YOU"]!.parent!.value
+        let goal = bodies["SAN"]!.parent!.value
+        
+        frontier.append(startingNode)
+        
+        var current = startingNode
+        while !frontier.isEmpty {
+            current = frontier.removeFirst()
+            traversed.insert(current)
+            
+            if current == goal {
+                break
+            }
+            
+            var nodes = bodies[current]!.children
+                .map { $0.value }
+                .filter { !traversed.contains($0) }
+            if let parent = bodies[current]!.parent?.value, !traversed.contains(parent) {
+                nodes.append(parent)
+            }
+            for node in nodes {
+                cameFrom[node] = current
+                frontier.append(node)
+            }
+        }
+        
+        guard current == goal else { fatalError() }
+        //traverse tree to get count
+        var steps = 0
+        while current != startingNode {
+            current = cameFrom[current]!
+            steps += 1
+        }
+        return steps
+    }
+    
     var rawInput: String {
         """
         S5F)4L5
@@ -900,107 +1002,5 @@ class Day6 {
         FVW)8R4
         XYX)6ZQ
         """
-    }
-    
-    var orbits: [(parent: String, child: String)] {
-        rawInput.split(separator: "\n").map {
-            let sides = $0.split(separator: ")")
-            return (parent: String(sides[0]), child: String(sides[1]))
-        }
-    }
-    
-    lazy var bodies: [String: Node] = {
-        var bodies = [String: Node]()
-        for (parent, child) in orbits {
-            let parentNode: Node
-            if bodies.keys.contains(parent) {
-                parentNode = bodies[parent]!
-            } else {
-                parentNode = Node(value: parent)
-                bodies[parent] = parentNode
-            }
-            let childNode: Node
-            if bodies.keys.contains(child) {
-                childNode = bodies[child]!
-            } else {
-                childNode = Node(value: child)
-                bodies[child] = childNode
-            }
-            parentNode.children.append(childNode)
-            childNode.parent = parentNode
-        }
-        return bodies
-    }()
-    
-    class Node {
-        weak var parent: Node?
-        var value: String
-        var children = [Node]()
-        
-        init(value: String) {
-            self.value = value
-        }
-    }
-    
-    // What is the total number of direct and indirect orbits in your map data?
-    func solution1() -> Int {
-        // construct tree
-        var orbitCount = 0
-        
-        for body in bodies.keys {
-            var current: Node? = bodies[body]
-            while current?.parent != nil {
-                orbitCount += 1
-                current = current?.parent
-            }
-        }
-        
-        return orbitCount
-    }
-    
-    /*
-     What is the minimum number of orbital transfers required to move from
-     the object YOU are orbiting to the object SAN is orbiting? (Between the
-     objects they are orbiting - not between YOU and SAN.)
-     */
-    func solution2() -> Int {
-        var frontier = [String]()
-        var cameFrom = [String: String]()
-        var traversed = Set<String>()
-        
-        let startingNode = bodies["YOU"]!.parent!.value
-        let goal = bodies["SAN"]!.parent!.value
-        
-        frontier.append(startingNode)
-        
-        var current = startingNode
-        while !frontier.isEmpty {
-            current = frontier.removeFirst()
-            traversed.insert(current)
-            
-            if current == goal {
-                break
-            }
-            
-            var nodes = bodies[current]!.children
-                .map { $0.value }
-                .filter { !traversed.contains($0) }
-            if let parent = bodies[current]!.parent?.value, !traversed.contains(parent) {
-                nodes.append(parent)
-            }
-            for node in nodes {
-                cameFrom[node] = current
-                frontier.append(node)
-            }
-        }
-        
-        guard current == goal else { fatalError() }
-        //traverse tree to get count
-        var steps = 0
-        while current != startingNode {
-            current = cameFrom[current]!
-            steps += 1
-        }
-        return steps
     }
 }
