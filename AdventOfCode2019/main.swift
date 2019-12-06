@@ -2,4 +2,4 @@ import Foundation
 
 print("Hello, World!")
 
-print(Day6().solution2())
+print(Day5().solution2())

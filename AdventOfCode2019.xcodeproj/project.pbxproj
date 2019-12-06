@@ -12,6 +12,7 @@
 		2343F73A2396226A00AE594E /* Day3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2343F7392396226A00AE594E /* Day3.swift */; };
 		23502E422397743800A021EF /* Day4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E412397743800A021EF /* Day4.swift */; };
 		23502E44239A18B500A021EF /* Day6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E43239A18B500A021EF /* Day6.swift */; };
+		23502E46239A271300A021EF /* Day5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E45239A271300A021EF /* Day5.swift */; };
 		23AD860B2394C375006D919A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD860A2394C375006D919A /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		2343F7392396226A00AE594E /* Day3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day3.swift; sourceTree = "<group>"; };
 		23502E412397743800A021EF /* Day4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day4.swift; sourceTree = "<group>"; };
 		23502E43239A18B500A021EF /* Day6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day6.swift; sourceTree = "<group>"; };
+		23502E45239A271300A021EF /* Day5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day5.swift; sourceTree = "<group>"; };
 		23AD86072394C375006D919A /* AdventOfCode2019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2019; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AD860A2394C375006D919A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 				2343F73723961D7000AE594E /* Day2.swift */,
 				2343F7392396226A00AE594E /* Day3.swift */,
 				23502E412397743800A021EF /* Day4.swift */,
+				23502E45239A271300A021EF /* Day5.swift */,
 				23502E43239A18B500A021EF /* Day6.swift */,
 			);
 			path = AdventOfCode2019;
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2343F73623961D5100AE594E /* Day1.swift in Sources */,
+				23502E46239A271300A021EF /* Day5.swift in Sources */,
 				23502E44239A18B500A021EF /* Day6.swift in Sources */,
 				23502E422397743800A021EF /* Day4.swift in Sources */,
 				2343F73823961D7000AE594E /* Day2.swift in Sources */,
