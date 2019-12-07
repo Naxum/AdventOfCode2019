@@ -4,7 +4,6 @@ import Foundation
 class IntcodeComputer {
     var memory: [Int]
     var inputs = [Int]()
-    var inputIndex = 0
     var index = 0
     
     init(memory: [Int], inputs: [Int] = []) {
@@ -31,14 +30,11 @@ class IntcodeComputer {
             switch opcode % 100 {
             case 1:
                 operate(operation: +)
-                index += 4
             case 2:
                 operate(operation: *)
-                index += 4
             case 3:
                 let storeIndex = memory[index+1]
-                memory[storeIndex] = inputs[inputIndex]
-                inputIndex += 1
+                memory[storeIndex] = inputs.removeFirst()
                 index += 2
             case 4:
                 let value = valueOfMemory(atOffset: 1)
@@ -51,10 +47,8 @@ class IntcodeComputer {
                 jump(ifTrue: false)
             case 7: // less than
                 evaluate(operation: <)
-                index += 4
             case 8: // equals
                 evaluate(operation: ==)
-                index += 4
             case 99:
                 return (output: nil, termination: memory[0])
             default:
@@ -72,11 +66,13 @@ class IntcodeComputer {
     private func operate(operation: (Int, Int) -> Int) {
         let storeIndex = memory[index + 3]
         memory[storeIndex] = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2))
+        index += 4
     }
     
     private func evaluate(operation: (Int, Int) -> Bool) {
         let storeIndex = memory[index + 3]
         memory[storeIndex] = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2)) ? 1 : 0
+        index += 4
     }
     
     private func jump(ifTrue: Bool) {
