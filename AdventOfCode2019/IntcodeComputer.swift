@@ -41,8 +41,7 @@ class IntcodeComputer {
                 inputIndex += 1
                 index += 2
             case 4:
-                let mode = opcode.digit(atPlace: 2)
-                let value = mode == 0 ? memory[memory[index+1]] : memory[index+1]
+                let value = valueOfMemory(atOffset: 1)
                 index += 2
                 return (output: value, termination: nil)
                 
