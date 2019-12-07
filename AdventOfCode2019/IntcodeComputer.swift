@@ -28,42 +28,6 @@ class IntcodeComputer {
     func step() -> (output: Int?, termination: Int?) {
         while true {
             let opcode = memory[index]
-            
-            // BA00
-            func operate(operation: (Int, Int) -> Int) {
-                let modeA = digit(of: opcode, atPlace: 2)
-                let modeB = digit(of: opcode, atPlace: 3)
-                let a = modeA == 1 ? memory[index + 1] : memory[memory[index + 1]]
-                let b = modeB == 1 ? memory[index + 2] : memory[memory[index + 2]]
-                let storeIndex = memory[index + 3]
-                memory[storeIndex] = operation(a, b)
-            }
-            
-            func jump(ifTrue: Bool) {
-                let modeA = digit(of: opcode, atPlace: 2)
-                let modeB = digit(of: opcode, atPlace: 3)
-                let a = modeA == 1 ? memory[index + 1] : memory[memory[index + 1]]
-                let b = modeB == 1 ? memory[index + 2] : memory[memory[index + 2]]
-                let passes: Bool = {
-                    if ifTrue { return a != 0 }
-                    else { return a == 0 }
-                }()
-                if passes {
-                    index = b
-                } else {
-                    index += 3
-                }
-            }
-            
-            func evaluate(operation: (Int, Int) -> Bool) {
-                let modeA = digit(of: opcode, atPlace: 2)
-                let modeB = digit(of: opcode, atPlace: 3)
-                let a = modeA == 1 ? memory[index + 1] : memory[memory[index + 1]]
-                let b = modeB == 1 ? memory[index + 2] : memory[memory[index + 2]]
-                let storeIndex = memory[index + 3]
-                memory[storeIndex] = operation(a, b) ? 1 : 0
-            }
-            
             switch opcode % 100 {
             case 1:
                 operate(operation: +)
@@ -77,7 +41,7 @@ class IntcodeComputer {
                 inputIndex += 1
                 index += 2
             case 4:
-                let mode = digit(of: opcode, atPlace: 2)
+                let mode = opcode.digit(atPlace: 2)
                 let value = mode == 0 ? memory[memory[index+1]] : memory[index+1]
                 index += 2
                 return (output: value, termination: nil)
@@ -98,10 +62,39 @@ class IntcodeComputer {
                 fatalError()
             }
         }
-        fatalError()
     }
     
-    func digit(of value: Int, atPlace place: Int) -> Int {
-        value / Int(pow(10, Double(place))) % 10
+    private func valueOfMemory(atOffset offset: Int) -> Int {
+        let opcode = memory[index]
+        let mode = opcode.digit(atPlace: offset + 1)
+        return mode == 1 ? memory[index + offset] : memory[memory[index + offset]]
+    }
+    
+    private func operate(operation: (Int, Int) -> Int) {
+        let storeIndex = memory[index + 3]
+        memory[storeIndex] = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2))
+    }
+    
+    private func evaluate(operation: (Int, Int) -> Bool) {
+        let storeIndex = memory[index + 3]
+        memory[storeIndex] = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2)) ? 1 : 0
+    }
+    
+    private func jump(ifTrue: Bool) {
+        let passes: Bool = {
+            if ifTrue { return valueOfMemory(atOffset: 1) != 0 }
+            else { return valueOfMemory(atOffset: 1) == 0 }
+        }()
+        if passes {
+            index = valueOfMemory(atOffset: 2)
+        } else {
+            index += 3
+        }
+    }
+}
+
+extension Int {
+    func digit(atPlace place: Int) -> Int {
+        self / Int(pow(10, Double(place))) % 10
     }
 }
