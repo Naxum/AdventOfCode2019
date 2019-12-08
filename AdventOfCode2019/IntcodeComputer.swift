@@ -32,6 +32,7 @@ class IntcodeComputer {
                 operate(operation: +)
             case 2:
                 operate(operation: *)
+
             case 3:
                 let storeIndex = memory[index+1]
                 memory[storeIndex] = inputs.removeFirst()
@@ -41,14 +42,16 @@ class IntcodeComputer {
                 index += 2
                 return (output: value, termination: nil)
                 
-            case 5: // jump-if-true
+            case 5:
                 jump(ifTrue: true)
-            case 6: // jump-if-false
+            case 6:
                 jump(ifTrue: false)
-            case 7: // less than
+                
+            case 7:
                 evaluate(operation: <)
-            case 8: // equals
+            case 8:
                 evaluate(operation: ==)
+                
             case 99:
                 return (output: nil, termination: memory[0])
             default:
