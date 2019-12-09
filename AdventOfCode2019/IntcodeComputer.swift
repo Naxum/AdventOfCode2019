@@ -4,7 +4,8 @@ import Foundation
 class IntcodeComputer {
     var memory: [Int]
     var inputs = [Int]()
-    var index = 0
+    var pointer = 0
+    var relativeBase = 0
     
     init(memory: [Int], inputs: [Int] = []) {
         self.memory = memory
@@ -26,7 +27,7 @@ class IntcodeComputer {
     
     func step() -> (output: Int?, termination: Int?) {
         while true {
-            let opcode = memory[index]
+            let opcode = memory[pointer]
             switch opcode % 100 {
             case 1:
                 operate(operation: +)
@@ -34,12 +35,11 @@ class IntcodeComputer {
                 operate(operation: *)
 
             case 3:
-                let storeIndex = memory[index+1]
-                memory[storeIndex] = inputs.removeFirst()
-                index += 2
+                memory[pointerApplyingOpcode(atOffset: 1)] = inputs.removeFirst()
+                pointer += 2
             case 4:
                 let value = valueOfMemory(atOffset: 1)
-                index += 2
+                pointer += 2
                 return (output: value, termination: nil)
                 
             case 5:
@@ -52,6 +52,12 @@ class IntcodeComputer {
             case 8:
                 evaluate(operation: ==)
                 
+            case 9:
+                //set relative base
+                let value = valueOfMemory(atOffset: 1)
+                relativeBase += value
+                pointer += 2
+                
             case 99:
                 return (output: nil, termination: memory[0])
             default:
@@ -60,33 +66,66 @@ class IntcodeComputer {
         }
     }
     
-    private func valueOfMemory(atOffset offset: Int) -> Int {
-        let opcode = memory[index]
+    private func pointerApplyingOpcode(atOffset offset: Int) -> Int {
+        let opcode = memory[pointer]
         let mode = opcode.digit(atPlace: offset + 1)
-        return mode == 1 ? memory[index + offset] : memory[memory[index + offset]]
+        let newPointer: Int
+        switch mode {
+        case 0:
+            // position mode
+            newPointer = memory[pointer + offset]
+        case 1:
+            // immediate mode
+            newPointer = pointer + offset
+        case 2:
+            // relative mode
+            newPointer = memory[pointer + offset] + relativeBase
+        default:
+            fatalError()
+        }
+        ensureMemoryCapacity(of: newPointer)
+        return newPointer
     }
     
+    private func valueOfMemory(atOffset offset: Int) -> Int {
+        let index = pointerApplyingOpcode(atOffset: offset)
+        return memory[index]
+    }
+    
+    // opcodes 1 and 2
     private func operate(operation: (Int, Int) -> Int) {
-        let storeIndex = memory[index + 3]
-        memory[storeIndex] = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2))
-        index += 4
+        let storeIndex = pointerApplyingOpcode(atOffset: 3)
+        let value = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2))
+        ensureMemoryCapacity(of: storeIndex)
+        memory[storeIndex] = value
+        pointer += 4
     }
     
+    // opcodes 7 and 8
     private func evaluate(operation: (Int, Int) -> Bool) {
-        let storeIndex = memory[index + 3]
-        memory[storeIndex] = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2)) ? 1 : 0
-        index += 4
+        let storeIndex = pointerApplyingOpcode(atOffset: 3)
+        let value = operation(valueOfMemory(atOffset: 1), valueOfMemory(atOffset: 2)) ? 1 : 0
+        ensureMemoryCapacity(of: storeIndex)
+        memory[storeIndex] = value
+        pointer += 4
     }
     
+    private func ensureMemoryCapacity(of count: Int) {
+        guard count >= memory.count else { return }
+        // NOTE: It may be better to use a dictionary for arbritary lookups than increasing the array count.
+        memory += [Int](repeating: 0, count: count - memory.count + 1)
+    }
+    
+    // opcodes 5 and 6
     private func jump(ifTrue: Bool) {
         let passes: Bool = {
             if ifTrue { return valueOfMemory(atOffset: 1) != 0 }
             else { return valueOfMemory(atOffset: 1) == 0 }
         }()
         if passes {
-            index = valueOfMemory(atOffset: 2)
+            pointer = valueOfMemory(atOffset: 2)
         } else {
-            index += 3
+            pointer += 3
         }
     }
 }
