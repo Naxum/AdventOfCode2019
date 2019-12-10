@@ -88,8 +88,7 @@ class IntcodeComputer {
     }
     
     private func valueOfMemory(atOffset offset: Int) -> Int {
-        let index = pointerApplyingOpcode(atOffset: offset)
-        return memory[index]
+        memory[pointerApplyingOpcode(atOffset: offset)]
     }
     
     // opcodes 1 and 2
