@@ -6,6 +6,7 @@ class IntcodeComputer {
     var inputs = [Int]()
     var pointer = 0
     var relativeBase = 0
+    private(set) var terminated = false
     
     init(memory: [Int], inputs: [Int] = []) {
         self.memory = memory
@@ -20,6 +21,7 @@ class IntcodeComputer {
                 outputs.append(output)
             }
             if let termination = result.termination {
+                terminated = true
                 return (outputs: outputs, termination: termination)
             }
         }

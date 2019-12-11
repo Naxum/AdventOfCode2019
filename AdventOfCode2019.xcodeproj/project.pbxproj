@@ -18,6 +18,7 @@
 		23502E4C239CD4F800A021EF /* Day8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E4B239CD4F800A021EF /* Day8.swift */; };
 		23502E4F239E0BBA00A021EF /* Day9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E4E239E0BBA00A021EF /* Day9.swift */; };
 		23502E51239F5DBC00A021EF /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E50239F5DBC00A021EF /* Day10.swift */; };
+		23502E5323A0CB5100A021EF /* Day11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E5223A0CB5100A021EF /* Day11.swift */; };
 		23AD860B2394C375006D919A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD860A2394C375006D919A /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		23502E4D239CE13B00A021EF /* Day8-SwiftUI.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Day8-SwiftUI.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23502E4E239E0BBA00A021EF /* Day9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day9.swift; sourceTree = "<group>"; };
 		23502E50239F5DBC00A021EF /* Day10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
+		23502E5223A0CB5100A021EF /* Day11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day11.swift; sourceTree = "<group>"; };
 		23AD86072394C375006D919A /* AdventOfCode2019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2019; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AD860A2394C375006D919A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 				23502E4D239CE13B00A021EF /* Day8-SwiftUI.playground */,
 				23502E4E239E0BBA00A021EF /* Day9.swift */,
 				23502E50239F5DBC00A021EF /* Day10.swift */,
+				23502E5223A0CB5100A021EF /* Day11.swift */,
 			);
 			path = AdventOfCode2019;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2343F73623961D5100AE594E /* Day1.swift in Sources */,
+				23502E5323A0CB5100A021EF /* Day11.swift in Sources */,
 				23502E4C239CD4F800A021EF /* Day8.swift in Sources */,
 				23502E4A239B6A4E00A021EF /* IntcodeComputer.swift in Sources */,
 				23502E46239A271300A021EF /* Day5.swift in Sources */,

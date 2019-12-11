@@ -210,8 +210,8 @@ class Day10 {
 }
 
 extension Day10.Point {
-    static var up = Day10.Point(0, 1)
+    static var up = Day10.Point(0, -1)
     static var left = Day10.Point(-1, 0)
     static var right = Day10.Point(1, 0)
-    static var down = Day10.Point(0, -1)
+    static var down = Day10.Point(0, 1)
 }
