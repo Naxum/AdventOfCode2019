@@ -34,13 +34,12 @@ class Day11 {
             computer = IntcodeComputer(memory: memory)
         }
         
-        func computerColorToPaint(over color: Int) -> Int? {
+        func computeColorToPaint(over color: Int) -> Int? {
             computer.inputs.append(color)
             let colorResult = computer.step()
             guard colorResult.termination == nil else {
                 print("Early termination!")
                 return nil
-//                fatalError("Early termination: \(termination)")
             }
             if let rotateDirection = computer.step().output {
                 switch direction {
@@ -64,15 +63,10 @@ class Day11 {
     func part1() {
         let panels = Panels()
         let robot = Robot(memory: input)
-        var i = 0
         while !robot.computer.terminated {
-            i += 1
-            if i % 100 == 0 {
-                print("Steps: \(i), painted: \(panels.values.keys.count)")
-            }
             let currentPosition = robot.position
             let startingColor = panels.getColor(at: currentPosition)
-            guard let newColor = robot.computerColorToPaint(over: startingColor) else {
+            guard let newColor = robot.computeColorToPaint(over: startingColor) else {
                 break
             }
             panels.set(color: newColor, at: currentPosition)
@@ -83,18 +77,12 @@ class Day11 {
     
     func part2() {
         let panels = Panels()
+        panels.set(color: 1, at: .zero)
         let robot = Robot(memory: input)
-        let color = robot.computerColorToPaint(over: 1)!
-        panels.set(color: color, at: .zero)
-        var i = 0
         while !robot.computer.terminated {
-            i += 1
-            if i % 100 == 0 {
-                print("Steps: \(i), painted: \(panels.values.keys.count)")
-            }
             let currentPosition = robot.position
             let startingColor = panels.getColor(at: currentPosition)
-            guard let newColor = robot.computerColorToPaint(over: startingColor) else {
+            guard let newColor = robot.computeColorToPaint(over: startingColor) else {
                 break
             }
             panels.set(color: newColor, at: currentPosition)
@@ -121,8 +109,6 @@ class Day11 {
                     case .down: row.append("🔽")
                     default: fatalError()
                     }
-                } else {
-//                    row.append(" ")
                 }
             }
             print(row)
