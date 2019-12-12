@@ -1,10 +1,3 @@
-//
-//  Day12.swift
-//  AdventOfCode2019
-//
-//  Created by Jake Sawyer on 12/11/19.
-//  Copyright © 2019 Jake Sawyer. All rights reserved.
-//
 
 import Foundation
 import simd
