@@ -4,9 +4,11 @@ import Foundation
 class IntcodeComputer {
     var memory: [Int]
     var inputs = [Int]()
+    var inputCallback: (() -> Int)?
     var pointer = 0
     var relativeBase = 0
-    private(set) var terminated = false
+    var terminated: Bool { terminationReason != nil }
+    private(set) var terminationReason: Int?
     
     init(memory: [Int], inputs: [Int] = []) {
         self.memory = memory
@@ -21,13 +23,16 @@ class IntcodeComputer {
                 outputs.append(output)
             }
             if let termination = result.termination {
-                terminated = true
+                terminationReason = termination
                 return (outputs: outputs, termination: termination)
             }
         }
     }
     
     func step() -> (output: Int?, termination: Int?) {
+        guard !terminated else {
+            return (output: nil, termination: terminationReason)
+        }
         while true {
             let opcode = memory[pointer]
             switch opcode % 100 {
@@ -37,7 +42,13 @@ class IntcodeComputer {
                 operate(operation: *)
 
             case 3:
-                memory[pointerApplyingOpcode(atOffset: 1)] = inputs.removeFirst()
+                let value: Int
+                if let callback = inputCallback {
+                    value = callback()
+                } else {
+                    value = inputs.removeFirst()
+                }
+                memory[pointerApplyingOpcode(atOffset: 1)] = value
                 pointer += 2
             case 4:
                 let value = valueOfMemory(atOffset: 1)
@@ -61,6 +72,7 @@ class IntcodeComputer {
                 pointer += 2
                 
             case 99:
+                terminationReason = memory[0]
                 return (output: nil, termination: memory[0])
             default:
                 fatalError()
