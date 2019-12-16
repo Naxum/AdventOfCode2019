@@ -24,6 +24,8 @@
 		23502E5323A0CB5100A021EF /* Day11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23502E5223A0CB5100A021EF /* Day11.swift */; };
 		23AD860B2394C375006D919A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AD860A2394C375006D919A /* main.swift */; };
 		23E6E5E523A6C25B0057DEEC /* Day15.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6E5E423A6C25B0057DEEC /* Day15.swift */; };
+		23E6E5E723A7466E0057DEEC /* Day16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6E5E623A7466E0057DEEC /* Day16.swift */; };
+		23E6E5E923A746820057DEEC /* FlexibleGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E6E5E823A746820057DEEC /* FlexibleGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +60,8 @@
 		23AD86072394C375006D919A /* AdventOfCode2019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2019; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AD860A2394C375006D919A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		23E6E5E423A6C25B0057DEEC /* Day15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day15.swift; sourceTree = "<group>"; };
+		23E6E5E623A7466E0057DEEC /* Day16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day16.swift; sourceTree = "<group>"; };
+		23E6E5E823A746820057DEEC /* FlexibleGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,8 @@
 				2313231823A352A7008E2922 /* Day13.swift */,
 				2313231A23A4A273008E2922 /* Day14.swift */,
 				23E6E5E423A6C25B0057DEEC /* Day15.swift */,
+				23E6E5E823A746820057DEEC /* FlexibleGrid.swift */,
+				23E6E5E623A7466E0057DEEC /* Day16.swift */,
 			);
 			path = AdventOfCode2019;
 			sourceTree = "<group>";
@@ -181,6 +187,8 @@
 				23502E44239A18B500A021EF /* Day6.swift in Sources */,
 				2313231923A352A7008E2922 /* Day13.swift in Sources */,
 				2313231B23A4A273008E2922 /* Day14.swift in Sources */,
+				23E6E5E723A7466E0057DEEC /* Day16.swift in Sources */,
+				23E6E5E923A746820057DEEC /* FlexibleGrid.swift in Sources */,
 				23502E4F239E0BBA00A021EF /* Day9.swift in Sources */,
 				23502E422397743800A021EF /* Day4.swift in Sources */,
 				2343F73823961D7000AE594E /* Day2.swift in Sources */,

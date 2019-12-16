@@ -2,4 +2,4 @@ import Foundation
 
 print("Hello, World!")
 
-Day15().solve()
+Day16().solve()
