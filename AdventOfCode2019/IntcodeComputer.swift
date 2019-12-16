@@ -29,6 +29,7 @@ class IntcodeComputer {
         }
     }
     
+    @discardableResult
     func step() -> (output: Int?, termination: Int?) {
         guard !terminated else {
             return (output: nil, termination: terminationReason)
